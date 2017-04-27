@@ -99,3 +99,4 @@ model.save('model/my_model_LSTM24_0_1split_adagrad_hid512_Thu1.h5')
 print('Test score:', score)
 #print('Test accuracy:', acc)
 
+print('hi')
