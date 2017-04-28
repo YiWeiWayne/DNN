@@ -13,7 +13,7 @@ import keras
 
 'exception_verbosity = high'
 batch_size = 10
-hidden_units =512
+hidden_units =256
 nb_classes = 2
 print('Loading data...')
 
@@ -88,15 +88,15 @@ model.add(Dense(nb_classes))
 model.add(Activation('softmax'))
 
 #sgd = SGD(lr=0.001, decay=1e-6, momentum=0.9, nesterov=True)
-model.compile(loss='categorical_crossentropy', optimizer='adagrad')
-earlyStopping=keras.callbacks.EarlyStopping(monitor='val_loss', patience=0, verbose=0, mode='auto')
+model.compile(loss='categorical_crossentropy', optimizer='adagrad', metrics=['accuracy'])
+earlyStopping=keras.callbacks.EarlyStopping(monitor='val_loss', patience=10, verbose=0, mode='auto')
 
 print("Train...")
 with tf.device('/gpu:0'):
-    model.fit(X_train, Y_train, batch_size=batch_size, nb_epoch=3, callbacks=[earlyStopping], validation_split=0.1, shuffle=False)
+    model.fit(X_train, Y_train, batch_size=batch_size, nb_epoch=100, callbacks=[earlyStopping], validation_split=0.1, shuffle=False)
     score = model.evaluate(X_test, Y_test,batch_size=batch_size)
-model.save('model/my_model_LSTM24_0_1split_adagrad_hid512_Thu1.h5')
+model.save('model/my_model_LSTM2_0_1split_adagrad_hid256_batch10_Thu4.h5')
 print('Test score:', score)
+model.summary
 #print('Test accuracy:', acc)
 
-print('hi')
